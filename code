@@ -1,0 +1,37 @@
+from PIL import Image
+
+def pixelate_image(input_image_path, output_image_path, pixel_size):
+
+    with Image.open(input_image_path) as img:
+        
+        width, height = img.size
+
+        img_small = img.resize((width // pixel_size, height // pixel_size), Image.NEAREST)
+
+        img_small.save(output_image_path)
+        print(f"Image saved as {output_image_path}")
+        
+        return img_small  
+
+def get_pixel_colors(image):
+    width, height = image.size
+    pixel_colors = []
+    
+    for y in range(height):
+        for x in range(width):
+            r, g, b = image.getpixel((x, y))  
+            pixel_colors.append((r, g, b))  
+    
+    return pixel_colors
+
+input_path = r'C:\Users\Tanveer Ahmed\Downloads\53405989488_c12c5b2532.jpg'   
+output_path = r'C:\Users\Tanveer Ahmed\Downloads\jamesbaldimage.jpg'  
+pixel_size = 10  
+
+pixelated_image = pixelate_image(input_path, output_path, pixel_size)
+
+pixel_colors = get_pixel_colors(pixelated_image)
+
+print("\nAll Pixel Colors:")
+for i, color in enumerate(pixel_colors): 
+    print(f"Pixel {i}: {color}")
